@@ -24,6 +24,7 @@ class UsersContainerSingleton:
         user = User(name, email, password)
         self.__users.append(user)
         UsersContainerSingleton.__number_of_users+=1
+        return user
 
     def store_users(self):
         file = open("./users.txt", "w")
@@ -68,9 +69,9 @@ class Auth:
         email_pattern = "^[a-zA-Z0-9_\.]+@[a-zA-Z0-9_.]+\.[a-z]{1,3}$"
         user=Auth.__search_in_users(email)
         if not user and re.match(email_pattern, email):
-            UsersContainerSingleton.get_instance().create_user(name, email, password)
+            user = UsersContainerSingleton.get_instance().create_user(name, email, password)
             UsersContainerSingleton.get_instance().store_users()
-            return True
+            return user
         return False
 
     @staticmethod
