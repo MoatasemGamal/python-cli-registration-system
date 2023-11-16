@@ -1,3 +1,4 @@
+import re
 class User:
     def __init__(self, name, email, password):
         self.name=name
@@ -52,3 +53,30 @@ class UsersContainerSingleton:
     @classmethod
     def get_num_of_users(cls):
         return cls.__number_of_users
+
+class Auth:
+    @staticmethod
+    def login(email, password):
+        user = Auth.__search_in_users(email)
+        if user and user.password == password:
+            return user
+        else:
+            return False
+
+    @staticmethod
+    def register(name, email, password):
+        email_pattern = "^[a-zA-Z0-9_\.]+@[a-zA-Z0-9_.]+\.[a-z]{1,3}$"
+        user=Auth.__search_in_users(email)
+        if not user and re.match(email_pattern, email):
+            UsersContainerSingleton.get_instance().create_user(name, email, password)
+            UsersContainerSingleton.get_instance().store_users()
+            return True
+        return False
+
+    @staticmethod
+    def __search_in_users(email):
+        users = UsersContainerSingleton.get_instance().get_users()
+        for u in users:
+            if u.email == email:
+                return u
+        return False
