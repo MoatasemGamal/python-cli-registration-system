@@ -15,4 +15,10 @@
 
 ## Preview:
 
-![](./register-preview.png)
+1. Login preview:
+
+   ![login preview](./login-preview.png)
+
+2. Register preview:
+
+   ![register preview](./register-preview.png)
