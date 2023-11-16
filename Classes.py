@@ -66,7 +66,7 @@ class Auth:
 
     @staticmethod
     def register(name, email, password):
-        email_pattern = "^[a-zA-Z0-9_\.]+@[a-zA-Z0-9_.]+\.[a-z]{1,3}$"
+        email_pattern = "^[a-zA-Z0-9_.]+@[a-zA-Z0-9_.]+.[a-z]{1,3}$"
         user=Auth.__search_in_users(email)
         if not user and re.match(email_pattern, email):
             user = UsersContainerSingleton.get_instance().create_user(name, email, password)
