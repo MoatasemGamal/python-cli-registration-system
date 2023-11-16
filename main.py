@@ -13,14 +13,22 @@ n = input("chose option: ")
 n=int(n)
 
 if n == 1:
-    email = input("Enter Your Email:").strip()
-    password = input("Enter Your Password").strip()
+    email = input("Enter Your Email: ").strip()
+    password = input("Enter Your Password: ").strip()
     u= Auth.login(email=email, password=password)
     if u:
         print(pyfiglet.figlet_format("Hello "+u.name))
     else:
         print(pyfiglet.figlet_format("Failed To login"))
 elif n == 2:
-    pass
+    name = input("Enter Your Name: ").strip()
+    email = input("Enter Your Email: ").strip()
+    password = input("Enter Your Password: ").strip()
+    u = Auth.register(name=name, email=email, password=password)
+    if u:
+        Auth.login(email=u.email, password=u.password)
+        print(pyfiglet.figlet_format("Hello "+u.name))
+    else:
+        print(pyfiglet.figlet_format("Sorry, failed to register"))
 else:
     print("You Should enter 1 or 2")
