@@ -6,6 +6,7 @@ class User:
 
 class UsersContainerSingleton:
     __singleton = None
+    __number_of_users = 0
 
     def __init__(self):
         if UsersContainerSingleton.__singleton != None:
@@ -21,6 +22,7 @@ class UsersContainerSingleton:
     def create_user(self, name, email, password):
         user = User(name, email, password)
         self.__users.append(user)
+        UsersContainerSingleton.__number_of_users+=1
 
     def store_users(self):
         file = open("./users.txt", "w")
@@ -36,8 +38,17 @@ class UsersContainerSingleton:
         for line in file:
             line=line.strip("\n")
             line = line.split("|")
-            name     = line[0]
-            email    = line[1]
-            password = line[2]
-            self.__users.append(User(name, email, password))
+            if len(line) == 3:
+                name     = line[0]
+                email    = line[1]
+                password = line[2]
+                self.__users.append(User(name, email, password))
+                UsersContainerSingleton.__number_of_users+=1
         file.close()
+
+    def get_users(self):
+        return self.__users
+
+    @classmethod
+    def get_num_of_users(cls):
+        return cls.__number_of_users
